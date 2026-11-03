@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">갈통이</title>
+  <desc id="desc">찌그러진 노란 양은 냄비에 들어앉아 알통을 자랑하는 근육질 찜갈비 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="meat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C94A2C"/>
+      <stop offset="1" stop-color="#7A2014"/>
+    </linearGradient>
+    <linearGradient id="pot" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6D35B"/>
+      <stop offset="1" stop-color="#CF9B26"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    g, path, circle, ellipse, rect { transform-box: view-box; }
+
+    /* 숨 들이쉬며 가슴 펴기 */
+    .chest { transform-origin: 200px 320px; animation: chest 1s infinite ease-in-out; }
+    @keyframes chest {
+      0%, 100% { transform: scale(1, 1); }
+      50%      { transform: scale(1.05, 1.05); }
+    }
+
+    /* 알통 자랑 */
+    .flex-l { transform-origin: 122px 232px; animation: flexL 1s infinite ease-in-out; }
+    @keyframes flexL {
+      0%, 100% { transform: rotate(10deg); }
+      50%      { transform: rotate(-8deg); }
+    }
+    .flex-r { transform-origin: 278px 232px; animation: flexR 1s infinite ease-in-out; }
+    @keyframes flexR {
+      0%, 100% { transform: rotate(-10deg); }
+      50%      { transform: rotate(8deg); }
+    }
+    .bicep-l { transform-origin: 84px 226px; animation: bicep 1s infinite ease-in-out; }
+    .bicep-r { transform-origin: 316px 226px; animation: bicep 1s infinite ease-in-out; }
+    @keyframes bicep {
+      0%, 100% { transform: scale(.72); }
+      50%      { transform: scale(1.18); }
+    }
+
+    .pot { transform-origin: 200px 400px; animation: pot .22s infinite alternate ease-in-out; }
+    @keyframes pot {
+      from { transform: rotate(-.9deg); }
+      to   { transform: rotate(.9deg); }
+    }
+
+    /* 둥실둥실 마늘 */
+    .garlic { animation: garlic 2s infinite ease-in-out; }
+    .garlic.b { animation-delay: -1s; }
+    @keyframes garlic {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-22px); }
+    }
+
+    /* 매워서 흐르는 땀 */
+    .sweat { animation: sweat 1s infinite ease-in; opacity: 0; }
+    .sweat.b { animation-delay: -.5s; }
+    @keyframes sweat {
+      0%   { transform: translateY(0); opacity: 0; }
+      15%  { opacity: 1; }
+      100% { transform: translateY(46px); opacity: 0; }
+    }
+
+    .pop { animation: pop 1.2s infinite ease-out; opacity: 0; }
+    .pop.b { animation-delay: -.4s; }
+    .pop.c { animation-delay: -.8s; }
+    @keyframes pop {
+      0%   { transform: translateY(0); opacity: 0; }
+      20%  { opacity: 1; }
+      100% { transform: translateY(-30px); opacity: 0; }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1s infinite ease-in-out; }
+    @keyframes word {
+      0%, 100% { transform: scale(.92) rotate(-3deg); }
+      50%      { transform: scale(1.08) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .sweat, .pop { opacity: .5; }
+    }
+  </style>
+
+  <!-- 마늘 -->
+  <g class="garlic" fill="#FFF6DE" stroke="#8B6B3D" stroke-width="4" stroke-linejoin="round">
+    <path d="M42 110c14-14 16-22 18-30 4 10 10 18 20 30 10 16-4 28-20 28s-30-12-18-28Z"/>
+  </g>
+  <g class="garlic b" fill="#FFF6DE" stroke="#8B6B3D" stroke-width="4" stroke-linejoin="round">
+    <path d="M336 152c10-10 12-16 13-22 3 7 7 13 15 22 7 12-3 20-15 20s-22-8-13-20Z"/>
+  </g>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="80" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="28" font-weight="800" fill="#C2410C">화끈!</text>
+  </g>
+
+  <!-- 왼팔 -->
+  <g class="flex-l">
+    <path d="M124 232C92 250 60 240 58 202" fill="none" stroke="#4A150C" stroke-width="28" stroke-linecap="round"/>
+    <path d="M124 232C92 250 60 240 58 202" fill="none" stroke="#A83A25" stroke-width="18" stroke-linecap="round"/>
+    <circle class="bicep-l" cx="84" cy="226" r="22" fill="#C24A30" stroke="#4A150C" stroke-width="5"/>
+    <circle cx="58" cy="190" r="19" fill="#C24A30" stroke="#4A150C" stroke-width="5"/>
+  </g>
+
+  <!-- 오른팔 -->
+  <g class="flex-r">
+    <path d="M276 232C308 250 340 240 342 202" fill="none" stroke="#4A150C" stroke-width="28" stroke-linecap="round"/>
+    <path d="M276 232C308 250 340 240 342 202" fill="none" stroke="#A83A25" stroke-width="18" stroke-linecap="round"/>
+    <circle class="bicep-r" cx="316" cy="226" r="22" fill="#C24A30" stroke="#4A150C" stroke-width="5"/>
+    <circle cx="342" cy="190" r="19" fill="#C24A30" stroke="#4A150C" stroke-width="5"/>
+  </g>
+
+  <g class="chest">
+    <!-- 갈비뼈 -->
+    <path d="M200 160V104" stroke="#5A3A1E" stroke-width="30" stroke-linecap="round"/>
+    <circle cx="186" cy="92" r="17" fill="#FFF4DC" stroke="#5A3A1E" stroke-width="5"/>
+    <circle cx="214" cy="92" r="17" fill="#FFF4DC" stroke="#5A3A1E" stroke-width="5"/>
+    <path d="M200 160V100" stroke="#FFF4DC" stroke-width="20" stroke-linecap="round"/>
+
+    <!-- 몸통 -->
+    <path d="M120 310C100 220 120 150 200 146C280 150 300 220 280 310Z" fill="url(#meat)" stroke="#4A150C" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M136 280q14 10 26 2M240 286q14 6 24-6" fill="none" stroke="#F2A58A" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+
+    <!-- 양념 -->
+    <path d="M136 186C160 138 240 138 264 186C268 208 250 206 244 192C234 214 216 212 212 194C204 214 184 212 180 194C170 208 134 212 136 186Z" fill="#E2502D" stroke="#4A150C" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M160 170q12-14 28-16" fill="none" stroke="#FFD0B8" stroke-width="6" stroke-linecap="round"/>
+    <g fill="#FFF0C8">
+      <circle cx="214" cy="164" r="3"/><circle cx="236" cy="176" r="3"/><circle cx="196" cy="176" r="3"/>
+    </g>
+
+    <!-- 얼굴 -->
+    <path d="M146 214l30 10M254 214l-30 10" fill="none" stroke="#2B0D06" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="166" cy="240" r="14" fill="#1F0905"/>
+    <circle cx="234" cy="240" r="14" fill="#1F0905"/>
+    <circle cx="171" cy="234" r="5" fill="#fff"/>
+    <circle cx="239" cy="234" r="5" fill="#fff"/>
+    <ellipse cx="140" cy="262" rx="14" ry="8" fill="#FF9C80" opacity=".65"/>
+    <ellipse cx="260" cy="262" rx="14" ry="8" fill="#FF9C80" opacity=".65"/>
+    <path d="M168 262h64q-4 26-32 26t-32-26Z" fill="#FFF8EA" stroke="#2B0D06" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M184 263v12M200 263v14M216 263v12" stroke="#C9BFA8" stroke-width="3"/>
+
+    <!-- 땀 -->
+    <g fill="#8AD3F5" stroke="#2B7FB8" stroke-width="2">
+      <path class="sweat" d="M120 190c-5 8-7 11-7 13a7 7 0 0 0 14 0c0-2-2-5-7-13Z"/>
+      <path class="sweat b" d="M280 190c-5 8-7 11-7 13a7 7 0 0 0 14 0c0-2-2-5-7-13Z"/>
+    </g>
+  </g>
+
+  <!-- 끓어오르는 양념 -->
+  <g fill="#E2502D" stroke="#7A2014" stroke-width="2">
+    <circle class="pop" cx="100" cy="298" r="8"/>
+    <circle class="pop b" cx="300" cy="298" r="9"/>
+    <circle class="pop c" cx="320" cy="300" r="6"/>
+  </g>
+
+  <!-- 찌그러진 양은 냄비 -->
+  <g class="pot">
+    <rect x="30" y="316" width="44" height="16" rx="8" fill="#B98718" stroke="#6B4A0C" stroke-width="5"/>
+    <rect x="326" y="316" width="44" height="16" rx="8" fill="#B98718" stroke="#6B4A0C" stroke-width="5"/>
+    <path d="M70 304H330L318 392Q200 410 82 392Z" fill="url(#pot)" stroke="#6B4A0C" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M60 304q70-6 140 0t140 0" fill="none" stroke="#6B4A0C" stroke-width="20" stroke-linecap="round"/>
+    <path d="M60 304q70-6 140 0t140 0" fill="none" stroke="#FBE187" stroke-width="10" stroke-linecap="round"/>
+    <!-- 찌그러진 자국 -->
+    <path d="M118 334q18 8 12 30q-18-4-22-16q2-10 10-14ZM258 352q24-10 34 6q-6 20-24 18q-14-10-10-24Z" fill="#BF8C1F" opacity=".7"/>
+    <path d="M178 346q20-8 36 2" fill="none" stroke="#FFF1B8" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <ellipse cx="200" cy="414" rx="130" ry="9" fill="#2B211C" opacity=".22"/>
+</svg>

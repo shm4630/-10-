@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">메롱이</title>
+  <desc id="desc">빨간 매운탕 냄비에서 몸을 내밀고 수염을 살랑이며 혀를 내미는 장난꾸러기 논메기 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6F7D60"/>
+      <stop offset="1" stop-color="#A9B08A"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    g, path, circle, ellipse, rect { transform-box: view-box; }
+
+    /* 냄비 속에서 좌우로 살랑살랑 */
+    .sway { transform-origin: 200px 340px; animation: sway 1.3s infinite ease-in-out; }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-7deg); }
+      50%      { transform: rotate(7deg); }
+    }
+
+    /* 메롱 */
+    .tongue { transform-origin: 200px 268px; animation: tongue 1.3s infinite ease-in-out; }
+    @keyframes tongue {
+      0%, 30%, 100% { transform: scaleY(.2); }
+      55%, 80%      { transform: scaleY(1.1); }
+    }
+
+    .whisker-l { transform-origin: 138px 258px; animation: whiskerL .8s infinite alternate ease-in-out; }
+    @keyframes whiskerL {
+      from { transform: rotate(-9deg); }
+      to   { transform: rotate(9deg); }
+    }
+    .whisker-r { transform-origin: 262px 258px; animation: whiskerR .8s infinite alternate ease-in-out; }
+    @keyframes whiskerR {
+      from { transform: rotate(9deg); }
+      to   { transform: rotate(-9deg); }
+    }
+
+    .tail { transform-origin: 322px 322px; animation: tail .5s infinite alternate ease-in-out; }
+    @keyframes tail {
+      from { transform: rotate(-12deg); }
+      to   { transform: rotate(14deg); }
+    }
+
+    .wave { animation: wave 1.3s infinite ease-in-out; }
+    @keyframes wave {
+      0%, 100% { transform: translateX(-9px); }
+      50%      { transform: translateX(9px); }
+    }
+
+    .blink { transform-origin: 200px 205px; animation: blink 2.8s infinite; }
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96%           { transform: scaleY(.08); }
+    }
+
+    .pop { animation: pop 1.2s infinite ease-out; opacity: 0; }
+    .pop.b { animation-delay: -.4s; }
+    .pop.c { animation-delay: -.8s; }
+    @keyframes pop {
+      0%   { transform: translateY(0); opacity: 0; }
+      20%  { opacity: 1; }
+      100% { transform: translateY(-44px); opacity: 0; }
+    }
+
+    .smoke { animation: smoke 3s infinite ease-out; opacity: 0; }
+    .smoke.b { animation-delay: -1.5s; }
+    @keyframes smoke {
+      0%   { transform: translateY(0) scale(.7); opacity: 0; }
+      25%  { opacity: .55; }
+      100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1.3s infinite ease-in-out; }
+    @keyframes word {
+      0%, 100% { transform: scale(.92) rotate(-3deg); }
+      50%      { transform: scale(1.08) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .smoke, .pop { opacity: .45; }
+    }
+  </style>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="80" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="27" font-weight="800" fill="#C2410C">메~롱!</text>
+  </g>
+
+  <!-- 김 -->
+  <g fill="none" stroke="#B9AEA3" stroke-width="7" stroke-linecap="round">
+    <path class="smoke" d="M58 300c-10-12 10-18 0-32"/>
+    <path class="smoke b" d="M84 290c10-12-10-18 0-32"/>
+  </g>
+
+  <!-- 꼬리 -->
+  <g class="tail">
+    <path d="M316 332C334 300 344 280 376 266C378 290 372 300 366 306C376 306 382 310 388 318C360 330 344 336 326 342Z" fill="#6F7D60" stroke="#2F3A28" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M340 306l26-20M346 316l26-6" stroke="#2F3A28" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <g class="sway">
+    <!-- 등지느러미 -->
+    <path d="M178 150C186 118 214 104 240 116C232 128 230 140 228 154Z" fill="#5C6A4E" stroke="#2F3A28" stroke-width="5" stroke-linejoin="round"/>
+
+    <!-- 옆지느러미 -->
+    <path d="M112 280C84 276 72 292 68 314C90 316 106 308 118 298Z" fill="#7C8A6C" stroke="#2F3A28" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M288 280C316 276 328 292 332 314C310 316 294 308 282 298Z" fill="#7C8A6C" stroke="#2F3A28" stroke-width="5" stroke-linejoin="round"/>
+
+    <!-- 몸통 -->
+    <path d="M108 350C96 250 104 148 200 140C296 148 304 250 292 350Z" fill="url(#skin)" stroke="#2F3A28" stroke-width="6" stroke-linejoin="round"/>
+    <ellipse cx="200" cy="316" rx="62" ry="48" fill="#E3E2C2"/>
+    <path d="M134 172q14-12 26-14M150 184q6-6 14-8" fill="none" stroke="#D8E0C4" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+
+    <!-- 미나리 모자 -->
+    <g fill="#6DBB46" stroke="#2F5E1E" stroke-width="4" stroke-linejoin="round">
+      <path d="M198 146c-22-4-34-18-34-34 18 0 32 12 38 30Z"/>
+      <path d="M204 142c2-20 14-32 32-36 2 18-8 32-26 40Z"/>
+      <path d="M196 144c-4-16 0-30 8-42 10 12 12 28 2 42Z"/>
+    </g>
+
+    <!-- 수염 -->
+    <g class="whisker-l" fill="none" stroke="#2F3A28" stroke-width="6" stroke-linecap="round">
+      <path d="M138 250C112 240 92 226 50 234"/>
+      <path d="M136 266C110 268 88 278 56 296"/>
+    </g>
+    <g class="whisker-r" fill="none" stroke="#2F3A28" stroke-width="6" stroke-linecap="round">
+      <path d="M262 250C288 240 308 226 350 234"/>
+      <path d="M264 266C290 268 312 278 344 296"/>
+    </g>
+
+    <!-- 얼굴 -->
+    <g class="blink">
+      <circle cx="146" cy="205" r="14" fill="#1B1F14"/>
+      <circle cx="254" cy="205" r="14" fill="#1B1F14"/>
+      <circle cx="151" cy="199" r="5" fill="#fff"/>
+      <circle cx="259" cy="199" r="5" fill="#fff"/>
+    </g>
+    <ellipse cx="122" cy="232" rx="13" ry="8" fill="#F2785C" opacity=".65"/>
+    <ellipse cx="278" cy="232" rx="13" ry="8" fill="#F2785C" opacity=".65"/>
+    <path d="M140 244C170 276 230 276 260 244C230 258 170 258 140 244Z" fill="#7A1F14" stroke="#2F3A28" stroke-width="5" stroke-linejoin="round"/>
+    <path class="tongue" d="M180 262h40v18a20 20 0 0 1-40 0Z" fill="#F46B7D" stroke="#7A1F14" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 매운탕 국물 -->
+  <g class="wave">
+    <path d="M58 340q24-22 48 0t48 0 48 0 48 0 48 0 48 0v22H58Z" fill="#D9361F" stroke="#7A1F14" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="110" y="340" width="26" height="9" rx="3" fill="#5DA83A"/>
+    <rect x="262" y="342" width="28" height="9" rx="3" fill="#5DA83A"/>
+    <rect x="186" y="346" width="24" height="10" rx="3" fill="#FFF3D6"/>
+  </g>
+
+  <!-- 끓는 방울 -->
+  <g fill="#F25A3A" stroke="#7A1F14" stroke-width="2">
+    <circle class="pop" cx="92" cy="332" r="7"/>
+    <circle class="pop b" cx="316" cy="330" r="8"/>
+    <circle class="pop c" cx="136" cy="330" r="5"/>
+  </g>
+
+  <!-- 냄비 -->
+  <rect x="26" y="366" width="42" height="16" rx="8" fill="#2B2724" stroke="#111" stroke-width="4"/>
+  <rect x="332" y="366" width="42" height="16" rx="8" fill="#2B2724" stroke="#111" stroke-width="4"/>
+  <path d="M60 356H340L324 430Q200 446 76 430Z" fill="#3D3835" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="50" y="350" width="300" height="18" rx="9" fill="#5B5550" stroke="#111" stroke-width="5"/>
+  <path d="M104 390q26-8 52-6" fill="none" stroke="#857E78" stroke-width="6" stroke-linecap="round"/>
+</svg>

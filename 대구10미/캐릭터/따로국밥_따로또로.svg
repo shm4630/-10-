@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">따로또로</title>
+  <desc id="desc">따로국밥의 밥그릇 따로와 국그릇 또로가 서로 고개를 돌리며 티격태격하고, 숟가락이 가운데서 말리는 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2F4F6"/>
+      <stop offset="1" stop-color="#A9B2BA"/>
+    </linearGradient>
+    <linearGradient id="clay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9794A"/>
+      <stop offset="1" stop-color="#8A4525"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    g, path, circle, ellipse, rect { transform-box: view-box; }
+
+    /* 서로 반대쪽으로 고개 돌리기 */
+    .lean-l { transform-origin: 110px 360px; animation: leanL 1.2s infinite ease-in-out; }
+    @keyframes leanL {
+      0%, 100% { transform: rotate(-9deg); }
+      50%      { transform: rotate(3deg) translateY(-6px); }
+    }
+    .lean-r { transform-origin: 290px 360px; animation: leanR 1.2s infinite ease-in-out; }
+    @keyframes leanR {
+      0%, 100% { transform: rotate(9deg); }
+      50%      { transform: rotate(-3deg) translateY(-6px); }
+    }
+
+    /* 가운데서 말리는 숟가락 */
+    .spoon { transform-origin: 200px 350px; animation: spoon .6s infinite alternate ease-in-out; }
+    @keyframes spoon {
+      from { transform: rotate(-5deg); }
+      to   { transform: rotate(5deg) translateY(-12px); }
+    }
+
+    /* 투닥투닥 불꽃 */
+    .spark { animation: spark 1.2s infinite; opacity: 0; }
+    .spark.b { animation-delay: -.6s; }
+    @keyframes spark {
+      0%, 35%, 70%, 100% { opacity: 0; }
+      50%                { opacity: 1; }
+    }
+
+    .slosh { animation: slosh 1.2s infinite ease-in-out; }
+    @keyframes slosh {
+      0%, 100% { transform: translateX(-10px); }
+      50%      { transform: translateX(10px); }
+    }
+
+    .smoke { animation: smoke 3s infinite ease-out; opacity: 0; }
+    .smoke.b { animation-delay: -1.5s; }
+    @keyframes smoke {
+      0%   { transform: translateY(0) scale(.7); opacity: 0; }
+      25%  { opacity: .55; }
+      100% { transform: translateY(-70px) scale(1.2); opacity: 0; }
+    }
+
+    .blink { transform-origin: 200px 296px; animation: blink 3s infinite; }
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96%           { transform: scaleY(.08); }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1.2s infinite ease-in-out; }
+    @keyframes word {
+      0%, 100% { transform: scale(.92) rotate(-3deg); }
+      50%      { transform: scale(1.08) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .smoke, .spark { opacity: .4; }
+    }
+  </style>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="79" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="25" font-weight="800" fill="#C2410C">따로 줘!</text>
+  </g>
+
+  <!-- 김 -->
+  <g fill="none" stroke="#B9AEA3" stroke-width="7" stroke-linecap="round">
+    <path class="smoke" d="M262 218c-10-12 10-18 0-32"/>
+    <path class="smoke b" d="M322 218c10-12-10-18 0-32"/>
+  </g>
+
+  <!-- 쟁반 -->
+  <rect x="16" y="364" width="368" height="18" rx="9" fill="#8A5A33" stroke="#4A2A14" stroke-width="5"/>
+  <ellipse cx="200" cy="396" rx="170" ry="7" fill="#2B211C" opacity=".2"/>
+
+  <!-- 말리는 숟가락 -->
+  <g class="spoon">
+    <path d="M200 180V350" stroke="#5A2E14" stroke-width="15" stroke-linecap="round"/>
+    <path d="M200 180V350" stroke="#D5DBE0" stroke-width="6" stroke-linecap="round"/>
+    <ellipse cx="200" cy="150" rx="22" ry="32" fill="url(#silver)" stroke="#5A2E14" stroke-width="5"/>
+    <circle cx="192" cy="146" r="3.5" fill="#2B150A"/>
+    <circle cx="208" cy="146" r="3.5" fill="#2B150A"/>
+    <path d="M192 162q4-5 8 0t8 0" fill="none" stroke="#2B150A" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- 투닥 불꽃 -->
+  <g fill="#FFC22E" stroke="#C2410C" stroke-width="3" stroke-linejoin="round">
+    <path class="spark" d="M170 205l6 10 12-3-7 10 7 10-12-3-6 10-3-11-12-1 9-7-5-11 11 4Z"/>
+    <path class="spark b" d="M232 205l6 10 12-3-7 10 7 10-12-3-6 10-3-11-12-1 9-7-5-11 11 4Z"/>
+  </g>
+
+  <!-- 밥그릇 따로 -->
+  <g class="lean-l">
+    <g fill="#8E98A1" stroke="#3F4348" stroke-width="5">
+      <ellipse cx="84" cy="353" rx="17" ry="9"/>
+      <ellipse cx="136" cy="353" rx="17" ry="9"/>
+    </g>
+    <path d="M42 280C20 285 18 305 42 312" fill="none" stroke="#3F4348" stroke-width="20" stroke-linecap="round"/>
+    <path d="M42 280C20 285 18 305 42 312" fill="none" stroke="#C7CED4" stroke-width="11" stroke-linecap="round"/>
+    <path d="M38 245C42 310 72 345 110 345C148 345 178 310 182 245Z" fill="url(#silver)" stroke="#3F4348" stroke-width="6" stroke-linejoin="round"/>
+    <ellipse cx="110" cy="245" rx="72" ry="16" fill="#E7EBEE" stroke="#3F4348" stroke-width="5"/>
+    <path d="M50 248C44 208 74 190 90 200C100 176 124 176 134 198C152 190 176 210 170 248C150 257 70 257 50 248Z" fill="#FFFDF6" stroke="#5A4A3A" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M78 224q6-5 11 0M112 208q6-5 11 0M134 228q6-5 11 0M100 238q6-5 11 0" fill="none" stroke="#CFC6B4" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M68 278l28 7M152 278l-28 7" fill="none" stroke="#2B150A" stroke-width="5.5" stroke-linecap="round"/>
+    <g class="blink">
+      <circle cx="84" cy="296" r="11" fill="#2B150A"/>
+      <circle cx="136" cy="296" r="11" fill="#2B150A"/>
+      <circle cx="80" cy="292" r="4" fill="#fff"/>
+      <circle cx="132" cy="292" r="4" fill="#fff"/>
+    </g>
+    <ellipse cx="64" cy="316" rx="11" ry="7" fill="#F2785C" opacity=".7"/>
+    <ellipse cx="156" cy="316" rx="11" ry="7" fill="#F2785C" opacity=".7"/>
+    <path d="M97 327q13-11 26 0" fill="none" stroke="#2B150A" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- 국그릇 또로 -->
+  <g class="lean-r">
+    <g fill="#6E3A1E" stroke="#3A1B0C" stroke-width="5">
+      <ellipse cx="264" cy="353" rx="17" ry="9"/>
+      <ellipse cx="316" cy="353" rx="17" ry="9"/>
+    </g>
+    <path d="M358 280C380 285 382 305 358 312" fill="none" stroke="#3A1B0C" stroke-width="20" stroke-linecap="round"/>
+    <path d="M358 280C380 285 382 305 358 312" fill="none" stroke="#B46B3F" stroke-width="11" stroke-linecap="round"/>
+    <path d="M218 245C222 310 252 345 290 345C328 345 358 310 362 245Z" fill="url(#clay)" stroke="#3A1B0C" stroke-width="6" stroke-linejoin="round"/>
+    <ellipse cx="290" cy="245" rx="72" ry="17" fill="#8A4A26" stroke="#3A1B0C" stroke-width="5"/>
+    <ellipse cx="290" cy="246" rx="58" ry="11" fill="#CF3A20"/>
+    <g class="slosh">
+      <rect x="262" y="241" width="13" height="5" rx="2" fill="#5DA83A"/>
+      <rect x="298" y="247" width="12" height="5" rx="2" fill="#5DA83A"/>
+      <rect x="278" y="248" width="14" height="6" rx="2" fill="#6B2A17"/>
+      <circle cx="316" cy="241" r="3.5" fill="#FFD27A"/>
+    </g>
+    <path d="M248 285l28-7M332 285l-28-7" fill="none" stroke="#2B150A" stroke-width="5.5" stroke-linecap="round"/>
+    <g class="blink">
+      <circle cx="264" cy="296" r="11" fill="#2B150A"/>
+      <circle cx="316" cy="296" r="11" fill="#2B150A"/>
+      <circle cx="268" cy="292" r="4" fill="#fff"/>
+      <circle cx="320" cy="292" r="4" fill="#fff"/>
+    </g>
+    <ellipse cx="244" cy="316" rx="11" ry="7" fill="#F2785C" opacity=".75"/>
+    <ellipse cx="336" cy="316" rx="11" ry="7" fill="#F2785C" opacity=".75"/>
+    <path d="M277 327q13-11 26 0" fill="none" stroke="#2B150A" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

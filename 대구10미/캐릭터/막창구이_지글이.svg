@@ -1,0 +1,221 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">지글이</title>
+  <desc id="desc">뜨거운 석쇠 위에서 통통 뛰면서 한 손을 흔들고, 다른 손에 된장 소스를 든 대구 막창 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4B765"/>
+      <stop offset=".55" stop-color="#DE8C3F"/>
+      <stop offset="1" stop-color="#A9551F"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#E5391E"/>
+      <stop offset=".6" stop-color="#FF8A1F"/>
+      <stop offset="1" stop-color="#FFD24A"/>
+    </linearGradient>
+    <clipPath id="bodyClip">
+      <path d="M112 140C96 165 104 180 100 200C90 225 100 245 106 258C104 290 140 318 200 318C260 318 296 290 294 258C300 245 310 225 300 200C296 180 304 165 288 140A88 30 0 0 0 112 140Z"/>
+    </clipPath>
+  </defs>
+
+  <style>
+    .hop, .shadow, .arm-wave, .arm-dip, .blink, .mouth, .flame, .smoke, .pop, .word, .coal {
+      transform-box: view-box;
+    }
+
+    /* 뜨거워서 통통 뛰기 (착지할 때 납작, 떠오를 때 길쭉) */
+    .hop { transform-origin: 200px 345px; animation: hop 1.1s infinite cubic-bezier(.45, 0, .55, 1); }
+    @keyframes hop {
+      0%, 100% { transform: translateY(0) scale(1.08, .9); }
+      18%      { transform: translateY(-16px) scale(.95, 1.06); }
+      50%      { transform: translateY(-46px) scale(.99, 1.01); }
+      82%      { transform: translateY(-14px) scale(.96, 1.05); }
+    }
+
+    .shadow { transform-origin: 200px 352px; animation: shadow 1.1s infinite cubic-bezier(.45, 0, .55, 1); }
+    @keyframes shadow {
+      0%, 100% { transform: scale(1); opacity: .42; }
+      50%      { transform: scale(.68); opacity: .2; }
+    }
+
+    .arm-wave { transform-origin: 106px 228px; animation: wave .55s infinite alternate ease-in-out; }
+    @keyframes wave {
+      from { transform: rotate(-16deg); }
+      to   { transform: rotate(26deg); }
+    }
+
+    .arm-dip { transform-origin: 294px 232px; animation: dip 1.1s infinite ease-in-out; }
+    @keyframes dip {
+      0%, 100% { transform: rotate(7deg); }
+      50%      { transform: rotate(-9deg); }
+    }
+
+    .blink { transform-origin: 200px 208px; animation: blink 3.4s infinite; }
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96%           { transform: scaleY(.08); }
+    }
+
+    .mouth { transform-origin: 200px 240px; animation: mouth 1.1s infinite ease-in-out; }
+    @keyframes mouth {
+      0%, 100% { transform: scale(1, .72); }
+      50%      { transform: scale(1, 1.1); }
+    }
+
+    .flame { transform-origin: center 450px; animation: flame .5s infinite alternate ease-in-out; }
+    .flame.b { animation-duration: .38s; animation-delay: -.2s; }
+    .flame.c { animation-duration: .44s; animation-delay: -.1s; }
+    @keyframes flame {
+      from { transform: scale(.88, .8); }
+      to   { transform: scale(1.06, 1.14); }
+    }
+
+    .coal { animation: coal 1.6s infinite alternate ease-in-out; }
+    @keyframes coal {
+      from { opacity: .55; }
+      to   { opacity: 1; }
+    }
+
+    .smoke { animation: smoke 3s infinite ease-out; opacity: 0; }
+    .smoke.b { animation-delay: -1s; }
+    .smoke.c { animation-delay: -2s; }
+    @keyframes smoke {
+      0%   { transform: translateY(0) scale(.7); opacity: 0; }
+      20%  { opacity: .55; }
+      100% { transform: translateY(-96px) scale(1.25); opacity: 0; }
+    }
+
+    /* 기름방울 톡톡 */
+    .pop { animation: pop 1.1s infinite ease-out; opacity: 0; }
+    .pop.b { animation-delay: -.35s; }
+    .pop.c { animation-delay: -.7s; }
+    @keyframes pop {
+      0%   { transform: translate(0, 0); opacity: 0; }
+      12%  { opacity: 1; }
+      100% { transform: translate(var(--dx), -44px); opacity: 0; }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1.1s infinite ease-in-out; }
+    @keyframes word {
+      0%, 100% { transform: scale(.92) rotate(-3deg); }
+      50%      { transform: scale(1.08) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .smoke, .pop { opacity: .4; }
+    }
+  </style>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="79" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="25" font-weight="800" fill="#C2410C">지글지글</text>
+  </g>
+
+  <!-- 연기 -->
+  <g fill="none" stroke="#B9AEA3" stroke-width="7" stroke-linecap="round">
+    <path class="smoke" d="M62 318c-12-14 12-22 0-38"/>
+    <path class="smoke b" d="M340 318c12-14-12-22 0-38"/>
+    <path class="smoke c" d="M86 300c-10-12 10-18 0-32"/>
+  </g>
+
+  <!-- 불과 숯 -->
+  <path class="flame" d="M92 450C70 428 90 408 96 384C112 404 124 428 92 450Z" fill="url(#flame)"/>
+  <path class="flame b" d="M200 450C166 426 186 396 198 372C222 398 236 426 200 450Z" fill="url(#flame)"/>
+  <path class="flame c" d="M308 450C276 428 296 408 304 384C322 404 340 428 308 450Z" fill="url(#flame)"/>
+  <path class="flame b" d="M146 450C126 432 142 414 148 398C162 414 172 434 146 450Z" fill="url(#flame)"/>
+  <path class="flame" d="M254 450C232 432 248 414 254 398C270 414 280 434 254 450Z" fill="url(#flame)"/>
+  <rect x="48" y="436" width="304" height="20" rx="10" fill="#2B211C"/>
+  <g class="coal" fill="#FF6A2B">
+    <circle cx="96" cy="446" r="5"/><circle cx="172" cy="444" r="4"/><circle cx="238" cy="447" r="5"/><circle cx="310" cy="445" r="4"/>
+  </g>
+
+  <!-- 석쇠 -->
+  <g stroke="#3A3532" stroke-linecap="round">
+    <path d="M36 356H364" stroke-width="9"/>
+    <path d="M64 356v14M112 356v14M160 356v14M208 356v14M256 356v14M304 356v14M344 356v14" stroke-width="6"/>
+    <path d="M44 372H356" stroke-width="5" opacity=".75"/>
+  </g>
+  <ellipse class="shadow" cx="200" cy="350" rx="92" ry="9" fill="#2B211C"/>
+
+  <!-- 기름방울 -->
+  <g fill="#FFC44D">
+    <circle class="pop" style="--dx:-18px" cx="110" cy="346" r="5"/>
+    <circle class="pop b" style="--dx:16px" cx="296" cy="346" r="6"/>
+    <circle class="pop c" style="--dx:-10px" cx="256" cy="346" r="4"/>
+    <circle class="pop b" style="--dx:14px" cx="144" cy="346" r="4"/>
+  </g>
+
+  <g class="hop">
+    <!-- 다리 -->
+    <g fill="#B8642A" stroke="#5A2E14" stroke-width="5" stroke-linejoin="round">
+      <path d="M150 306h28v28a6 6 0 0 1-6 6h-30c-8 0-8-11 0-12l8-1Z"/>
+      <path d="M250 306h-28v28a6 6 0 0 0 6 6h30c8 0 8-11 0-12l-8-1Z"/>
+    </g>
+
+    <!-- 흔드는 팔 -->
+    <g class="arm-wave">
+      <path d="M108 226C84 216 70 196 68 174" fill="none" stroke="#5A2E14" stroke-width="22" stroke-linecap="round"/>
+      <path d="M108 226C84 216 70 196 68 174" fill="none" stroke="#DE8C3F" stroke-width="13" stroke-linecap="round"/>
+      <circle cx="67" cy="166" r="14" fill="#E9A45A" stroke="#5A2E14" stroke-width="5"/>
+    </g>
+
+    <!-- 몸통 -->
+    <path d="M112 140C96 165 104 180 100 200C90 225 100 245 106 258C104 290 140 318 200 318C260 318 296 290 294 258C300 245 310 225 300 200C296 180 304 165 288 140A88 30 0 0 0 112 140Z" fill="url(#body)" stroke="#5A2E14" stroke-width="6" stroke-linejoin="round"/>
+
+    <g clip-path="url(#bodyClip)">
+      <!-- 칼집과 석쇠 자국 -->
+      <g fill="none" stroke="#6B3414" stroke-width="7" stroke-linecap="round" opacity=".62">
+        <path d="M100 178q18 10 32-4"/>
+        <path d="M268 174q14 14 34 4"/>
+        <path d="M96 268q20 12 40-2"/>
+        <path d="M266 268q20 12 38-2"/>
+        <path d="M150 300q50 18 100 0"/>
+      </g>
+      <g fill="none" stroke="#3F1D0B" stroke-width="10" stroke-linecap="round" opacity=".5">
+        <path d="M120 200l-18 26"/>
+        <path d="M290 200l18 26"/>
+        <path d="M128 282l-14 18"/>
+        <path d="M274 282l14 18"/>
+      </g>
+      <!-- 윤기 -->
+      <path d="M124 186q-8 24 0 44" fill="none" stroke="#FFF1D2" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+      <circle cx="136" cy="248" r="5" fill="#FFF1D2" opacity=".7"/>
+    </g>
+
+    <!-- 막창 구멍 -->
+    <ellipse cx="200" cy="140" rx="88" ry="30" fill="#F6CF8E" stroke="#5A2E14" stroke-width="6"/>
+    <ellipse cx="200" cy="141" rx="60" ry="17" fill="#6E2B17"/>
+    <path d="M152 145q48 18 96 0" fill="none" stroke="#3F150A" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- 얼굴 -->
+    <ellipse cx="146" cy="242" rx="17" ry="10" fill="#F2785C" opacity=".75"/>
+    <ellipse cx="254" cy="242" rx="17" ry="10" fill="#F2785C" opacity=".75"/>
+    <path d="M148 184q14-11 28-3M224 181q14-8 28 3" fill="none" stroke="#3F1D0B" stroke-width="6" stroke-linecap="round"/>
+    <g class="blink">
+      <circle cx="166" cy="210" r="15" fill="#2B150A"/>
+      <circle cx="234" cy="210" r="15" fill="#2B150A"/>
+      <circle cx="171" cy="204" r="5.5" fill="#fff"/>
+      <circle cx="239" cy="204" r="5.5" fill="#fff"/>
+      <circle cx="161" cy="216" r="2.5" fill="#fff"/>
+      <circle cx="229" cy="216" r="2.5" fill="#fff"/>
+    </g>
+    <g class="mouth">
+      <path d="M176 228h48c2 24-11 34-24 34s-26-10-24-34Z" fill="#7A1F14" stroke="#3F1D0B" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M186 254q14-13 28 0q-14 11-28 0Z" fill="#F46B5D"/>
+    </g>
+
+    <!-- 된장 소스 든 팔 -->
+    <g class="arm-dip">
+      <path d="M292 232C312 240 326 240 340 232" fill="none" stroke="#5A2E14" stroke-width="22" stroke-linecap="round"/>
+      <path d="M292 232C312 240 326 240 340 232" fill="none" stroke="#DE8C3F" stroke-width="13" stroke-linecap="round"/>
+      <path d="M314 214h60q-2 26-20 28h-20q-18-2-20-28Z" fill="#F5EFE3" stroke="#5A2E14" stroke-width="5" stroke-linejoin="round"/>
+      <ellipse cx="344" cy="214" rx="30" ry="9" fill="#9A6A2F" stroke="#5A2E14" stroke-width="5"/>
+      <circle cx="334" cy="212" r="3.5" fill="#5DA83A"/>
+      <circle cx="350" cy="215" r="3.5" fill="#5DA83A"/>
+      <circle cx="356" cy="210" r="3" fill="#D8362A"/>
+      <circle cx="342" cy="238" r="13" fill="#E9A45A" stroke="#5A2E14" stroke-width="5"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">뽀복이</title>
+  <desc id="desc">콩나물 접시 위에 둥실 떠서 몸을 빵빵하게 부풀렸다 줄이는 복어불고기 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EE6A32"/>
+      <stop offset=".6" stop-color="#F6A04A"/>
+      <stop offset="1" stop-color="#FFD98A"/>
+    </linearGradient>
+    <path id="spike" d="M187 140L200 110L213 140Z" fill="#E8833A" stroke="#6B2F12" stroke-width="5" stroke-linejoin="round"/>
+  </defs>
+
+  <style>
+    g, path, circle, ellipse, rect { transform-box: view-box; }
+
+    /* 빵빵하게 부풀었다 푸슈 줄어들기 */
+    .puff { transform-origin: 200px 235px; animation: puff 1.6s infinite cubic-bezier(.5, 0, .4, 1); }
+    @keyframes puff {
+      0%, 100% { transform: translateY(8px) scale(.8); }
+      55%      { transform: translateY(-6px) scale(1.14); }
+      68%      { transform: translateY(-6px) scale(1.08); }
+    }
+
+    .shadow { transform-origin: 200px 408px; animation: shadow 1.6s infinite cubic-bezier(.5, 0, .4, 1); }
+    @keyframes shadow {
+      0%, 100% { transform: scale(.8); }
+      55%      { transform: scale(1.1); }
+    }
+
+    .fin-l { transform-origin: 104px 245px; animation: finL .3s infinite alternate ease-in-out; }
+    @keyframes finL {
+      from { transform: rotate(-16deg); }
+      to   { transform: rotate(18deg); }
+    }
+    .fin-r { transform-origin: 296px 245px; animation: finR .3s infinite alternate ease-in-out; }
+    @keyframes finR {
+      from { transform: rotate(16deg); }
+      to   { transform: rotate(-18deg); }
+    }
+
+    .blink { transform-origin: 200px 218px; animation: blink 3.2s infinite; }
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96%           { transform: scaleY(.08); }
+    }
+
+    .lips { transform-origin: 200px 264px; animation: lips 1.6s infinite ease-in-out; }
+    @keyframes lips {
+      0%, 100% { transform: scale(1.25); }
+      55%      { transform: scale(.75); }
+    }
+
+    /* 줄어들 때 뿜는 바람 */
+    .air { animation: air 1.6s infinite ease-out; opacity: 0; }
+    .air.b { animation-delay: .1s; }
+    @keyframes air {
+      0%, 70% { transform: translate(0, 0); opacity: 0; }
+      76%     { opacity: .9; }
+      100%    { transform: translate(var(--dx), 34px); opacity: 0; }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1.6s infinite ease-in-out; }
+    @keyframes word {
+      0%, 100% { transform: scale(.88) rotate(-3deg); }
+      55%      { transform: scale(1.12) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .air { opacity: .4; }
+    }
+  </style>
+
+  <!-- 콩나물 접시 -->
+  <ellipse class="shadow" cx="200" cy="408" rx="120" ry="9" fill="#2B211C" opacity=".22"/>
+  <path d="M60 372Q200 346 340 372" fill="none" stroke="#C9B98A" stroke-width="14" stroke-linecap="round"/>
+  <g fill="none" stroke="#FFF3C4" stroke-width="7" stroke-linecap="round">
+    <path d="M86 372q18-18 40-10M136 366q20-14 44-4M196 362q22-12 42 2M250 366q22-8 44 8"/>
+  </g>
+  <g fill="#F7CF4F" stroke="#A67F1A" stroke-width="3">
+    <ellipse cx="128" cy="361" rx="8" ry="6"/><ellipse cx="182" cy="361" rx="8" ry="6"/><ellipse cx="240" cy="364" rx="8" ry="6"/><ellipse cx="296" cy="374" rx="8" ry="6"/>
+  </g>
+  <path d="M46 378H354C350 400 310 406 200 406S50 400 46 378Z" fill="#FFFDF6" stroke="#5A4A3A" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M84 390q60 7 130 5" fill="none" stroke="#4E9AC9" stroke-width="5" stroke-linecap="round" stroke-dasharray="14 10"/>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="80" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="28" font-weight="800" fill="#C2410C">빵빵!</text>
+  </g>
+
+  <g class="puff">
+    <!-- 가시 -->
+    <use href="#spike"/>
+    <use href="#spike" transform="rotate(30 200 235)"/>
+    <use href="#spike" transform="rotate(60 200 235)"/>
+    <use href="#spike" transform="rotate(120 200 235)"/>
+    <use href="#spike" transform="rotate(150 200 235)"/>
+    <use href="#spike" transform="rotate(180 200 235)"/>
+    <use href="#spike" transform="rotate(210 200 235)"/>
+    <use href="#spike" transform="rotate(240 200 235)"/>
+    <use href="#spike" transform="rotate(300 200 235)"/>
+    <use href="#spike" transform="rotate(330 200 235)"/>
+
+    <!-- 지느러미 -->
+    <path class="fin-l" d="M104 245C80 222 56 224 44 236C52 252 52 268 60 280C78 280 96 268 104 245Z" fill="#F6A04A" stroke="#6B2F12" stroke-width="5" stroke-linejoin="round"/>
+    <path class="fin-r" d="M296 245C320 222 344 224 356 236C348 252 348 268 340 280C322 280 304 268 296 245Z" fill="#F6A04A" stroke="#6B2F12" stroke-width="5" stroke-linejoin="round"/>
+
+    <!-- 몸통 -->
+    <circle cx="200" cy="235" r="100" fill="url(#skin)" stroke="#6B2F12" stroke-width="6"/>
+    <ellipse cx="200" cy="284" rx="72" ry="42" fill="#FFF3CF"/>
+    <!-- 불고기 양념과 콩나물 머리장식 -->
+    <path d="M134 162C160 128 240 128 266 162C268 180 252 180 244 168C236 186 218 184 212 170C204 188 184 188 180 170C170 184 132 184 134 162Z" fill="#D9361F" stroke="#7A1F14" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M158 152q14-12 30-12" fill="none" stroke="#FFB9A2" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="216" cy="150" r="3" fill="#FFF0C8"/><circle cx="236" cy="160" r="3" fill="#FFF0C8"/>
+
+    <!-- 얼굴 -->
+    <path d="M136 196q14-10 28-4M236 192q14-6 28 4" fill="none" stroke="#3F1D0B" stroke-width="6" stroke-linecap="round"/>
+    <g class="blink">
+      <circle cx="156" cy="222" r="16" fill="#2B150A"/>
+      <circle cx="244" cy="222" r="16" fill="#2B150A"/>
+      <circle cx="161" cy="216" r="6" fill="#fff"/>
+      <circle cx="249" cy="216" r="6" fill="#fff"/>
+      <circle cx="151" cy="228" r="2.5" fill="#fff"/>
+      <circle cx="239" cy="228" r="2.5" fill="#fff"/>
+    </g>
+    <ellipse cx="128" cy="256" rx="17" ry="10" fill="#F2785C" opacity=".8"/>
+    <ellipse cx="272" cy="256" rx="17" ry="10" fill="#F2785C" opacity=".8"/>
+    <g class="lips">
+      <ellipse cx="200" cy="264" rx="17" ry="13" fill="#F46B7D" stroke="#7A1F14" stroke-width="5"/>
+      <ellipse cx="200" cy="264" rx="6" ry="4.5" fill="#7A1F14"/>
+    </g>
+  </g>
+
+  <!-- 푸슈 바람 -->
+  <g fill="#FFFFFF" stroke="#B9AEA3" stroke-width="3">
+    <circle class="air" style="--dx:-30px" cx="186" cy="286" r="9"/>
+    <circle class="air b" style="--dx:30px" cx="214" cy="286" r="7"/>
+    <circle class="air b" style="--dx:-8px" cx="200" cy="292" r="5"/>
+  </g>
+</svg>

@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">꾹꾹이</title>
+  <desc id="desc">홍두깨에 꾹꾹 눌려 납작해졌다가 다시 말랑하게 돌아오는 누른국수 반죽 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="dough" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF9E8"/>
+      <stop offset="1" stop-color="#EFD7A2"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D9A464"/>
+      <stop offset="1" stop-color="#9C6535"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    g, path, circle, ellipse, rect { transform-box: view-box; }
+
+    /* 꾹 눌렸다가 말랑 복원 */
+    .press { transform-origin: 200px 345px; animation: press 1.6s infinite ease-in-out; }
+    @keyframes press {
+      0%, 30%, 100% { transform: scale(1, 1); }
+      48%           { transform: scale(1.26, .66); }
+      62%           { transform: scale(1.2, .72); }
+      82%           { transform: scale(.97, 1.03); }
+    }
+
+    .pin { animation: pin 1.6s infinite ease-in-out; }
+    @keyframes pin {
+      0%, 100% { transform: translateY(-6px); }
+      30%      { transform: translateY(-6px); }
+      48%      { transform: translateY(58px); }
+      62%      { transform: translateY(48px); }
+      82%      { transform: translateY(-6px); }
+    }
+
+    .noodle-l { transform-origin: 104px 262px; animation: noodleL .4s infinite alternate ease-in-out; }
+    @keyframes noodleL {
+      from { transform: rotate(-12deg); }
+      to   { transform: rotate(14deg); }
+    }
+    .noodle-r { transform-origin: 296px 262px; animation: noodleR .4s infinite alternate ease-in-out; }
+    @keyframes noodleR {
+      from { transform: rotate(12deg); }
+      to   { transform: rotate(-14deg); }
+    }
+
+    /* 눌릴 때 질끈, 펴지면 또랑또랑 */
+    .open  { animation: open 1.6s infinite; }
+    .close { animation: close 1.6s infinite; opacity: 0; }
+    @keyframes open {
+      0%, 40%, 72%, 100% { opacity: 1; }
+      44%, 68%           { opacity: 0; }
+    }
+    @keyframes close {
+      0%, 40%, 72%, 100% { opacity: 0; }
+      44%, 68%           { opacity: 1; }
+    }
+
+    /* 밀가루 풀풀 */
+    .flour { animation: flour 1.6s infinite ease-out; opacity: 0; }
+    @keyframes flour {
+      0%, 45% { transform: translate(0, 0) scale(.5); opacity: 0; }
+      52%     { opacity: .95; }
+      90%, 100% { transform: translate(var(--dx), -34px) scale(1.2); opacity: 0; }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1.6s infinite ease-in-out; }
+    @keyframes word {
+      0%, 30%, 100% { transform: scale(.92) rotate(-3deg); }
+      48%           { transform: scale(1.12) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .flour, .close { opacity: 0; }
+    }
+  </style>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="80" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="27" font-weight="800" fill="#C2410C">꾸욱~</text>
+  </g>
+
+  <!-- 도마 -->
+  <rect x="30" y="344" width="340" height="24" rx="10" fill="url(#wood)" stroke="#5A3418" stroke-width="5"/>
+  <path d="M58 356h80M170 358h46M256 355h76" stroke="#7A4A22" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+  <rect x="58" y="368" width="34" height="16" rx="5" fill="#7A4A22" stroke="#5A3418" stroke-width="5"/>
+  <rect x="308" y="368" width="34" height="16" rx="5" fill="#7A4A22" stroke="#5A3418" stroke-width="5"/>
+  <ellipse cx="200" cy="396" rx="170" ry="8" fill="#2B211C" opacity=".2"/>
+
+  <g class="press">
+    <!-- 국수가락 팔 -->
+    <g class="noodle-l" fill="none" stroke-linecap="round">
+      <path d="M106 262q-16-18-30 0t-30 0" stroke="#8A6A30" stroke-width="15"/>
+      <path d="M106 262q-16-18-30 0t-30 0" stroke="#FFEBB5" stroke-width="7"/>
+      <path d="M106 280q-14-14-26 0t-26 2" stroke="#8A6A30" stroke-width="15"/>
+      <path d="M106 280q-14-14-26 0t-26 2" stroke="#FFEBB5" stroke-width="7"/>
+    </g>
+    <g class="noodle-r" fill="none" stroke-linecap="round">
+      <path d="M294 262q16-18 30 0t30 0" stroke="#8A6A30" stroke-width="15"/>
+      <path d="M294 262q16-18 30 0t30 0" stroke="#FFEBB5" stroke-width="7"/>
+      <path d="M294 280q14-14 26 0t26 2" stroke="#8A6A30" stroke-width="15"/>
+      <path d="M294 280q14-14 26 0t26 2" stroke="#FFEBB5" stroke-width="7"/>
+    </g>
+
+    <!-- 반죽 몸 -->
+    <path d="M100 216C100 182 130 170 200 170C270 170 300 182 300 216V316C300 338 280 344 200 344C120 344 100 338 100 316Z" fill="url(#dough)" stroke="#6E5022" stroke-width="6" stroke-linejoin="round"/>
+    <g fill="#FFFFFF">
+      <circle cx="134" cy="198" r="7"/><circle cx="152" cy="190" r="4"/><circle cx="268" cy="204" r="6"/><circle cx="120" cy="300" r="4"/><circle cx="278" cy="306" r="5"/>
+    </g>
+
+    <!-- 얼굴 -->
+    <ellipse cx="136" cy="280" rx="17" ry="10" fill="#F7A08C" opacity=".85"/>
+    <ellipse cx="264" cy="280" rx="17" ry="10" fill="#F7A08C" opacity=".85"/>
+    <g class="open">
+      <circle cx="162" cy="252" r="15" fill="#2B150A"/>
+      <circle cx="238" cy="252" r="15" fill="#2B150A"/>
+      <circle cx="167" cy="246" r="5.5" fill="#fff"/>
+      <circle cx="243" cy="246" r="5.5" fill="#fff"/>
+      <path d="M180 282q20 22 40 0" fill="none" stroke="#2B150A" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    <g class="close" fill="none" stroke="#2B150A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M146 242l28 12-28 12M254 242l-28 12 28 12"/>
+      <path d="M182 288q9-10 18 0t18 0"/>
+    </g>
+  </g>
+
+  <!-- 홍두깨 -->
+  <g class="pin">
+    <rect x="42" y="143" width="44" height="16" rx="8" fill="#8A5A33" stroke="#4A2A14" stroke-width="5"/>
+    <rect x="314" y="143" width="44" height="16" rx="8" fill="#8A5A33" stroke="#4A2A14" stroke-width="5"/>
+    <rect x="72" y="131" width="256" height="40" rx="20" fill="url(#wood)" stroke="#4A2A14" stroke-width="6"/>
+    <path d="M96 143h120" stroke="#F2D29C" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- 밀가루 -->
+  <g fill="#FFFFFF" stroke="#D9CDB4" stroke-width="3">
+    <circle class="flour" style="--dx:-40px" cx="62" cy="330" r="13"/>
+    <circle class="flour" style="--dx:-20px" cx="88" cy="336" r="9"/>
+    <circle class="flour" style="--dx:40px" cx="338" cy="330" r="13"/>
+    <circle class="flour" style="--dx:20px" cx="312" cy="336" r="9"/>
+  </g>
+</svg>

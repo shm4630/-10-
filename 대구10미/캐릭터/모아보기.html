@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대구 10미 친구들</title>
+<style>
+  :root {
+    --bg: #FFF8EA;
+    --card: #FFFFFF;
+    --ink: #3F1D0B;
+    --muted: #7A5A44;
+    --line: #EAD9BE;
+    --accent: #C2410C;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 40px 16px 64px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  }
+  header { max-width: 1120px; margin: 0 auto 28px; }
+  h1 { margin: 0 0 6px; font-size: 32px; }
+  header p { margin: 0; color: var(--muted); }
+  .grid {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  .card {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 18px;
+    padding: 14px 16px 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card img { width: 100%; aspect-ratio: 400 / 460; display: block; }
+  .dish { margin: 8px 0 0; color: var(--accent); font-size: 14px; font-weight: 700; }
+  .name { margin: 2px 0 6px; font-size: 24px; }
+  .about { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.55; flex: 1; }
+  .save {
+    align-self: flex-start;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .save:hover { background: #9A3412; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>대구 10미 친구들</h1>
+    <p>움직이는 캐릭터 10종이에요. 저장 버튼을 누르면 SVG 파일로 받을 수 있어요.</p>
+  </header>
+  <main class="grid">
+    <article class="card">
+      <img src="따로국밥_따로또로.svg" alt="따로또로">
+      <p class="dish">따로국밥</p>
+      <h2 class="name">따로또로</h2>
+      <p class="about">밥그릇 따로와 국그릇 또로는 붙어 있으면 티격태격해요. 숟가락이 늘 가운데서 말려요.</p>
+      <a class="save" href="따로국밥_따로또로.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="찜갈비_갈통이.svg" alt="갈통이">
+      <p class="dish">동인동 찜갈비</p>
+      <h2 class="name">갈통이</h2>
+      <p class="about">갈비와 알통을 합친 이름이에요. 찌그러진 양은 냄비가 자기 헬스장이고, 매워도 땀 흘리며 버텨요.</p>
+      <a class="save" href="찜갈비_갈통이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="막창구이_지글이.svg" alt="지글이">
+      <p class="dish">막창구이</p>
+      <h2 class="name">지글이</h2>
+      <p class="about">석쇠가 뜨거워도 된장 소스만 있으면 행복해요. 통통 뛰면서 손님에게 인사해요.</p>
+      <a class="save" href="막창구이_지글이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="논메기매운탕_메롱이.svg" alt="메롱이">
+      <p class="dish">논메기매운탕</p>
+      <h2 class="name">메롱이</h2>
+      <p class="about">얼큰한 국물을 온천처럼 즐기는 장난꾸러기예요. 미나리 모자를 쓰고 혀를 내밀어요.</p>
+      <a class="save" href="논메기매운탕_메롱이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="복어불고기_뽀복이.svg" alt="뽀복이">
+      <p class="dish">복어불고기</p>
+      <h2 class="name">뽀복이</h2>
+      <p class="about">기분이 좋으면 빵빵해지고, 푸슈 바람을 뿜으며 줄어들어요. 콩나물 침대를 제일 좋아해요.</p>
+      <a class="save" href="복어불고기_뽀복이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="누른국수_꾹꾹이.svg" alt="꾹꾹이">
+      <p class="dish">누른국수</p>
+      <h2 class="name">꾹꾹이</h2>
+      <p class="about">홍두깨에 꾹꾹 눌려도 금세 말랑하게 돌아오는 긍정왕이에요. 팔은 국수가락이에요.</p>
+      <a class="save" href="누른국수_꾹꾹이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="무침회_새콤이.svg" alt="새콤이">
+      <p class="dish">무침회</p>
+      <h2 class="name">새콤이</h2>
+      <p class="about">오이 안경을 낀 멋쟁이 오징어예요. 춤을 추면서 채소를 휙휙 던져 무쳐요.</p>
+      <a class="save" href="무침회_새콤이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="야끼우동_뽀글이.svg" alt="뽀글이">
+      <p class="dish">야끼우동</p>
+      <h2 class="name">뽀글이</h2>
+      <p class="about">불맛에 진심인 뽀글머리 록스타예요. 선글라스는 불 앞에서도 절대 벗지 않아요.</p>
+      <a class="save" href="야끼우동_뽀글이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="납작만두_납짝이.svg" alt="납짝이">
+      <p class="dish">납작만두</p>
+      <h2 class="name">납짝이</h2>
+      <p class="about">납작한 몸이 최고의 자랑이에요. 옆으로 돌면 종이처럼 사라졌다가 짠 하고 나타나요.</p>
+      <a class="save" href="납작만두_납짝이.svg" download>저장</a>
+    </article>
+    <article class="card">
+      <img src="뭉티기_뭉뭉이.svg" alt="뭉뭉이">
+      <p class="dish">뭉티기</p>
+      <h2 class="name">뭉뭉이</h2>
+      <p class="about">쫀득한 부끄럼쟁이예요. 젓가락이 다가오면 얼굴이 빨개져서 슬쩍 피해요.</p>
+      <a class="save" href="뭉티기_뭉뭉이.svg" download>저장</a>
+    </article>
+  </main>
+</body>
+</html>

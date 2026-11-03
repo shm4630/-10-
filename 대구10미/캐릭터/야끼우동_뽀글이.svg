@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">뽀글이</title>
+  <desc id="desc">선글라스를 낀 뽀글머리 면발이 불 위의 웍에서 휙휙 튀어 오르는 야끼우동 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#E5391E"/>
+      <stop offset=".6" stop-color="#FF8A1F"/>
+      <stop offset="1" stop-color="#FFD24A"/>
+    </linearGradient>
+    <radialGradient id="noodle" cx=".4" cy=".35" r=".8">
+      <stop offset="0" stop-color="#F7C062"/>
+      <stop offset="1" stop-color="#D9692C"/>
+    </radialGradient>
+    <circle id="curl" cx="190" cy="118" r="30" fill="#E58D3B" stroke="#6B2F12" stroke-width="6"/>
+  </defs>
+
+  <style>
+    g, path, circle, ellipse, rect { transform-box: view-box; }
+
+    /* 웍에서 휙! */
+    .toss { transform-origin: 190px 210px; animation: toss 1s infinite cubic-bezier(.45, 0, .55, 1); }
+    @keyframes toss {
+      0%, 100% { transform: translateY(0) scale(1.05, .95) rotate(0); }
+      50%      { transform: translateY(-42px) scale(.98, 1.03) rotate(7deg); }
+    }
+
+    .wok { transform-origin: 200px 380px; animation: wok 1s infinite ease-in-out; }
+    @keyframes wok {
+      0%, 100% { transform: rotate(5deg); }
+      50%      { transform: rotate(-5deg) translateY(4px); }
+    }
+
+    .flame { transform-origin: center 450px; animation: flame .4s infinite alternate ease-in-out; }
+    .flame.b { animation-duration: .3s; animation-delay: -.15s; }
+    @keyframes flame {
+      from { transform: scale(.86, .78); }
+      to   { transform: scale(1.08, 1.18); }
+    }
+
+    /* 선글라스 반짝 */
+    .glint { animation: glint 2s infinite ease-in-out; }
+    @keyframes glint {
+      0%, 55%, 100% { opacity: 0; transform: translateX(-12px); }
+      70%           { opacity: .95; }
+      85%           { opacity: 0; transform: translateX(14px); }
+    }
+
+    /* 같이 튀는 건더기 */
+    .fly { animation: fly 1s infinite ease-out; opacity: 0; }
+    .fly.b { animation-delay: -.33s; }
+    .fly.c { animation-delay: -.66s; }
+    @keyframes fly {
+      0%   { transform: translate(0, 0); opacity: 0; }
+      15%  { opacity: 1; }
+      55%  { transform: translate(calc(var(--dx) * .6), -80px); opacity: 1; }
+      100% { transform: translate(var(--dx), -10px); opacity: 0; }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1s infinite ease-in-out; }
+    @keyframes word {
+      0%, 100% { transform: scale(.92) rotate(-3deg); }
+      50%      { transform: scale(1.08) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .fly { opacity: .8; }
+    }
+  </style>
+
+  <!-- 불 -->
+  <path class="flame" d="M104 450C80 424 104 404 110 376C128 400 140 426 104 450Z" fill="url(#flame)"/>
+  <path class="flame b" d="M162 450C136 424 156 392 166 366C188 392 200 426 162 450Z" fill="url(#flame)"/>
+  <path class="flame" d="M232 450C206 424 226 392 236 366C258 392 270 426 232 450Z" fill="url(#flame)"/>
+  <path class="flame b" d="M296 450C272 424 292 404 300 376C318 400 330 426 296 450Z" fill="url(#flame)"/>
+  <rect x="64" y="442" width="272" height="14" rx="7" fill="#2B211C"/>
+
+  <!-- 뽀글머리 면발 -->
+  <g class="toss">
+    <use href="#curl"/>
+    <use href="#curl" transform="rotate(32 190 210)"/>
+    <use href="#curl" transform="rotate(64 190 210)"/>
+    <use href="#curl" transform="rotate(96 190 210)"/>
+    <use href="#curl" transform="rotate(264 190 210)"/>
+    <use href="#curl" transform="rotate(296 190 210)"/>
+    <use href="#curl" transform="rotate(328 190 210)"/>
+    <circle cx="190" cy="210" r="92" fill="url(#noodle)"/>
+    <g fill="none" stroke="#A84E1C" stroke-width="6" stroke-linecap="round">
+      <path d="M126 158q18-22 36-4t-8 22"/>
+      <path d="M190 132q18-14 30 2t-10 22"/>
+      <path d="M100 190q-12 20 4 32"/>
+      <path d="M268 170q14 18 2 36"/>
+      <path d="M180 112q-16 0-22 12"/>
+    </g>
+    <g fill="#D9361F">
+      <circle cx="150" cy="134" r="4"/><circle cx="234" cy="140" r="4"/><circle cx="122" cy="256" r="4"/><circle cx="258" cy="252" r="4"/>
+    </g>
+
+    <!-- 선글라스 -->
+    <path d="M130 196H250" stroke="#111" stroke-width="8" stroke-linecap="round"/>
+    <path d="M122 196h56v20a18 18 0 0 1-18 18h-20a18 18 0 0 1-18-18ZM202 196h56v20a18 18 0 0 1-18 18h-20a18 18 0 0 1-18-18Z" fill="#17120F" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+    <path class="glint" d="M134 228l22-28h12l-22 28ZM214 228l22-28h12l-22 28Z" fill="#FFFFFF"/>
+
+    <!-- 입 -->
+    <path d="M150 250c14 30 66 30 80 0Z" fill="#FFF8EA" stroke="#3F1D0B" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M170 251v13M190 251v18M210 251v13" stroke="#C9BFA8" stroke-width="3"/>
+    <ellipse cx="124" cy="240" rx="14" ry="8" fill="#F2563C" opacity=".6"/>
+    <ellipse cx="256" cy="240" rx="14" ry="8" fill="#F2563C" opacity=".6"/>
+  </g>
+
+  <!-- 건더기 -->
+  <g>
+    <path class="fly" style="--dx:-46px" d="M96 322c6-14 22-16 30-8-4 4-8 6-12 6 2 6 0 10-2 14-8-2-14-6-16-12Z" fill="#FF8E7A" stroke="#A8321E" stroke-width="4" stroke-linejoin="round"/>
+    <rect class="fly b" style="--dx:42px" x="284" y="310" width="28" height="11" rx="4" fill="#6DBB46" stroke="#2F5E1E" stroke-width="4"/>
+    <circle class="fly c" style="--dx:-30px" cx="132" cy="316" r="10" fill="#FFF3D6" stroke="#B18A4A" stroke-width="4"/>
+    <circle class="fly" style="--dx:30px" cx="260" cy="316" r="8" fill="#D9361F" stroke="#7A1F14" stroke-width="3"/>
+  </g>
+
+  <!-- 웍 -->
+  <g class="wok">
+    <path d="M340 306L392 276" stroke="#111" stroke-width="20" stroke-linecap="round"/>
+    <path d="M340 306L392 276" stroke="#6E4A2C" stroke-width="10" stroke-linecap="round"/>
+    <path d="M52 300H348C338 378 270 410 200 410S62 378 52 300Z" fill="#332E2B" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+    <rect x="42" y="292" width="316" height="16" rx="8" fill="#57504B" stroke="#111" stroke-width="5"/>
+    <path d="M86 334q28 34 72 44" fill="none" stroke="#7D756F" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="80" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="28" font-weight="800" fill="#C2410C">불맛!</text>
+  </g>
+</svg>

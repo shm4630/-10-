@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 460" role="img" aria-labelledby="title desc">
+  <title id="title">새콤이</title>
+  <desc id="desc">오이 안경을 끼고 다리를 흔들며 춤추고, 채소를 위로 휙휙 던져 무치는 빨간 오징어 무침회 캐릭터</desc>
+
+  <defs>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F58A5B"/>
+      <stop offset="1" stop-color="#D9402A"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    g, path, circle, ellipse, rect { transform-box: view-box; }
+
+    /* 신나서 추는 오징어 춤 */
+    .dance { transform-origin: 200px 370px; animation: dance 1s infinite ease-in-out; }
+    @keyframes dance {
+      0%, 100% { transform: rotate(-7deg) translateY(0); }
+      25%      { transform: rotate(0) translateY(-14px); }
+      50%      { transform: rotate(7deg) translateY(0); }
+      75%      { transform: rotate(0) translateY(-14px); }
+    }
+
+    .leg-a { animation: legA .5s infinite alternate ease-in-out; }
+    .leg-b { animation: legB .5s infinite alternate ease-in-out; }
+    @keyframes legA {
+      from { transform: rotate(-11deg); }
+      to   { transform: rotate(11deg); }
+    }
+    @keyframes legB {
+      from { transform: rotate(11deg); }
+      to   { transform: rotate(-11deg); }
+    }
+
+    .fin-l { transform-origin: 158px 130px; animation: finL .5s infinite alternate ease-in-out; }
+    @keyframes finL {
+      from { transform: rotate(-10deg); }
+      to   { transform: rotate(12deg); }
+    }
+    .fin-r { transform-origin: 242px 130px; animation: finR .5s infinite alternate ease-in-out; }
+    @keyframes finR {
+      from { transform: rotate(10deg); }
+      to   { transform: rotate(-12deg); }
+    }
+
+    /* 휙휙 날아다니는 채소 */
+    .fly { animation: fly 1.5s infinite ease-in-out; opacity: 0; }
+    .fly.b { animation-delay: -.5s; }
+    .fly.c { animation-delay: -1s; }
+    @keyframes fly {
+      0%   { transform: translate(0, 0); opacity: 0; }
+      12%  { opacity: 1; }
+      50%  { transform: translate(calc(var(--dx) * .5), -120px); opacity: 1; }
+      88%  { opacity: 1; }
+      100% { transform: translate(var(--dx), 0); opacity: 0; }
+    }
+
+    .blink { transform-origin: 165px 205px; animation: blink 2.6s infinite; }
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96%           { transform: scaleY(.08); }
+    }
+
+    .word { transform-origin: 322px 70px; animation: word 1s infinite ease-in-out; }
+    @keyframes word {
+      0%, 100% { transform: scale(.92) rotate(-3deg); }
+      50%      { transform: scale(1.08) rotate(4deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .fly { opacity: 1; }
+    }
+  </style>
+
+  <!-- 접시 -->
+  <path d="M40 394H360C354 420 310 430 200 430S46 420 40 394Z" fill="#FFFDF6" stroke="#5A4A3A" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="200" cy="394" rx="160" ry="16" fill="#E2502D" stroke="#5A4A3A" stroke-width="5"/>
+  <path d="M96 392q14-6 26 0M188 398q14-6 26 0M272 390q14-6 26 0" fill="none" stroke="#F7B79E" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- 날아다니는 채소 -->
+  <g>
+    <g class="fly" style="--dx:-40px">
+      <circle cx="74" cy="380" r="17" fill="#CFE8A2" stroke="#3E7A2A" stroke-width="5"/>
+      <path d="M74 372v16M66 380h16" stroke="#8CBF5C" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <rect class="fly b" style="--dx:30px" x="324" y="374" width="11" height="34" rx="4" fill="#FF9A2E" stroke="#B85E0E" stroke-width="4"/>
+    <g class="fly c" style="--dx:-30px">
+      <path d="M116 386c-8-14 2-30 14-36 8 12 6 30-6 38Z" fill="#6DBB46" stroke="#2F5E1E" stroke-width="4" stroke-linejoin="round"/>
+    </g>
+    <g class="fly b" style="--dx:36px">
+      <circle cx="288" cy="382" r="14" fill="#CFE8A2" stroke="#3E7A2A" stroke-width="5"/>
+      <path d="M288 375v14M281 382h14" stroke="#8CBF5C" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <g class="dance">
+    <!-- 다리 -->
+    <g fill="none" stroke-linecap="round">
+      <g class="leg-a" style="transform-origin:138px 262px">
+        <path d="M138 262C124 300 138 330 98 368" stroke="#7A1F14" stroke-width="24"/>
+        <path d="M138 262C124 300 138 330 98 368" stroke="#E8583A" stroke-width="14"/>
+      </g>
+      <g class="leg-b" style="transform-origin:262px 262px">
+        <path d="M262 262C276 300 262 330 302 368" stroke="#7A1F14" stroke-width="24"/>
+        <path d="M262 262C276 300 262 330 302 368" stroke="#E8583A" stroke-width="14"/>
+      </g>
+      <g class="leg-b" style="transform-origin:160px 268px">
+        <path d="M160 268C150 306 170 336 138 378" stroke="#7A1F14" stroke-width="24"/>
+        <path d="M160 268C150 306 170 336 138 378" stroke="#EE6A45" stroke-width="14"/>
+      </g>
+      <g class="leg-a" style="transform-origin:240px 268px">
+        <path d="M240 268C250 306 230 336 262 378" stroke="#7A1F14" stroke-width="24"/>
+        <path d="M240 268C250 306 230 336 262 378" stroke="#EE6A45" stroke-width="14"/>
+      </g>
+      <g class="leg-a" style="transform-origin:186px 272px">
+        <path d="M186 272C178 310 198 340 178 384" stroke="#7A1F14" stroke-width="24"/>
+        <path d="M186 272C178 310 198 340 178 384" stroke="#F27E58" stroke-width="14"/>
+      </g>
+      <g class="leg-b" style="transform-origin:214px 272px">
+        <path d="M214 272C222 310 202 340 222 384" stroke="#7A1F14" stroke-width="24"/>
+        <path d="M214 272C222 310 202 340 222 384" stroke="#F27E58" stroke-width="14"/>
+      </g>
+    </g>
+
+    <!-- 지느러미 -->
+    <path class="fin-l" d="M172 96C140 92 108 110 100 138C124 148 150 152 164 148Z" fill="#E8583A" stroke="#7A1F14" stroke-width="5" stroke-linejoin="round"/>
+    <path class="fin-r" d="M228 96C260 92 292 110 300 138C276 148 250 152 236 148Z" fill="#E8583A" stroke="#7A1F14" stroke-width="5" stroke-linejoin="round"/>
+
+    <!-- 몸통 -->
+    <path d="M200 62C252 104 284 170 284 240C284 290 116 290 116 240C116 170 148 104 200 62Z" fill="url(#skin)" stroke="#7A1F14" stroke-width="6" stroke-linejoin="round"/>
+    <g fill="#FFF0C8">
+      <circle cx="188" cy="110" r="3.5"/><circle cx="214" cy="124" r="3.5"/><circle cx="178" cy="146" r="3.5"/><circle cx="228" cy="156" r="3.5"/><circle cx="200" cy="164" r="3.5"/><circle cx="136" cy="258" r="3.5"/><circle cx="264" cy="256" r="3.5"/>
+    </g>
+    <path d="M172 118q6-16 18-26" fill="none" stroke="#FFD0B8" stroke-width="7" stroke-linecap="round"/>
+
+    <!-- 얼굴 -->
+    <g class="blink">
+      <circle cx="165" cy="208" r="15" fill="#2B150A"/>
+      <circle cx="170" cy="202" r="5.5" fill="#fff"/>
+    </g>
+    <circle cx="235" cy="208" r="15" fill="#2B150A"/>
+    <circle cx="240" cy="202" r="5.5" fill="#fff"/>
+    <!-- 오이 안경 -->
+    <circle cx="235" cy="208" r="26" fill="#DDF2B8" fill-opacity=".28" stroke="#3E7A2A" stroke-width="7"/>
+    <circle cx="235" cy="208" r="20" fill="none" stroke="#A9D676" stroke-width="3"/>
+    <path d="M258 196q12-6 24-4" fill="none" stroke="#3E7A2A" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="138" cy="238" rx="15" ry="9" fill="#FFB199" opacity=".8"/>
+    <ellipse cx="262" cy="242" rx="15" ry="9" fill="#FFB199" opacity=".8"/>
+    <path d="M176 240q24 30 48 0Z" fill="#7A1F14" stroke="#2B150A" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M190 252q10-6 20 0q-10 8-20 0Z" fill="#F46B5D"/>
+  </g>
+
+  <!-- 말풍선 -->
+  <g class="word">
+    <path d="M268 42h108a14 14 0 0 1 14 14v28a14 14 0 0 1-14 14h-62l-20 20 4-20h-30a14 14 0 0 1-14-14V56a14 14 0 0 1 14-14Z" fill="#FFF8EA" stroke="#5A2E14" stroke-width="4" stroke-linejoin="round"/>
+    <text x="322" y="79" text-anchor="middle" font-family="'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="25" font-weight="800" fill="#C2410C">새콤달콤</text>
+  </g>
+</svg>
