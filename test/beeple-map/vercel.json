@@ -1,0 +1,8 @@
+{
+  "framework": "vite",
+  "functions": {
+    "api/zones.js": { "maxDuration": 60 },
+    "api/search.js": { "maxDuration": 15 }
+  },
+  "rewrites": [{ "source": "/map/:slug", "destination": "/index.html" }]
+}
