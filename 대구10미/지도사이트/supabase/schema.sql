@@ -97,6 +97,74 @@ $$;
 revoke execute on function public.report_beeple(text, text, text) from public;
 grant execute on function public.report_beeple(text, text, text) to anon, authenticated;
 
+-- 구획 저장 함수는 서버만 아는 토큰을 확인한다. private 스키마는 외부 API에 노출되지 않는다.
+-- 토큰 설정: insert into private.settings (write_token_hash)
+--   values (encode(sha256(convert_to('토큰', 'UTF8')), 'hex'));
+create schema if not exists private;
+create table if not exists private.settings (write_token_hash text not null);
+alter table private.settings enable row level security;
+
+create or replace function public.save_zone(
+  p_token text,
+  p_slug text,
+  p_road text,
+  p_area text,
+  p_display_name text,
+  p_boundary jsonb,
+  p_boundary_exact boolean,
+  p_stores jsonb
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_zone_id uuid;
+begin
+  if not exists (
+    select 1 from private.settings
+    where write_token_hash = encode(sha256(convert_to(p_token, 'UTF8')), 'hex')
+  ) then
+    raise exception '허용되지 않은 요청입니다.';
+  end if;
+
+  -- beeple_status는 건드리지 않으므로 다시 수집해도 사용자 제보가 유지된다.
+  insert into stores (biz_id, name, branch, category_mid, category_small, address, floor, lon, lat)
+  select distinct on (biz_id) biz_id, name, branch, category_mid, category_small, address, floor, lon, lat
+  from jsonb_to_recordset(p_stores) as x(
+    biz_id text, name text, branch text, category_mid text, category_small text,
+    address text, floor text, lon double precision, lat double precision
+  )
+  on conflict (biz_id) do update set
+    name = excluded.name,
+    branch = excluded.branch,
+    category_mid = excluded.category_mid,
+    category_small = excluded.category_small,
+    address = excluded.address,
+    floor = excluded.floor,
+    lon = excluded.lon,
+    lat = excluded.lat,
+    updated_at = now();
+
+  insert into zones (slug, road, area, display_name, boundary, boundary_exact, store_count)
+  values (p_slug, p_road, p_area, p_display_name, p_boundary, p_boundary_exact, jsonb_array_length(p_stores))
+  on conflict (slug) do update set
+    display_name = excluded.display_name,
+    boundary = excluded.boundary,
+    boundary_exact = excluded.boundary_exact,
+    store_count = excluded.store_count
+  returning id into v_zone_id;
+
+  delete from zone_stores where zone_id = v_zone_id;
+  insert into zone_stores (zone_id, biz_id)
+  select distinct v_zone_id, biz_id from jsonb_to_recordset(p_stores) as x(biz_id text);
+end;
+$$;
+
+revoke execute on function public.save_zone(text, text, text, text, text, jsonb, boolean, jsonb) from public;
+grant execute on function public.save_zone(text, text, text, text, text, jsonb, boolean, jsonb) to anon, authenticated;
+
 -- 다른 사용자의 제보가 바로 보이도록 실시간 전송을 켠다.
 do $$
 begin

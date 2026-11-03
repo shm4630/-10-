@@ -22,7 +22,6 @@ export function devApi(env) {
         }
         sendJson(res, await createZone(env, {
           body: await readJson(req),
-          encodedPassword: req.headers['x-admin-password'],
           origin: req.headers.origin,
           host: req.headers.host,
         }));

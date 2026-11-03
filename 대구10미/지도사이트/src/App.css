@@ -34,26 +34,23 @@ input { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-ra
 .error { color: var(--danger); font-size: 14px; }
 .notice { color: var(--muted); font-size: 13px; }
 
-/* 처음 화면 */
-.home { display: grid; gap: 32px; max-width: 640px; margin: 0 auto; padding: 40px 16px; }
-.home h1 { font-size: 28px; margin-bottom: 8px; }
-.home h2 { font-size: 18px; margin-bottom: 12px; }
-.zone-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.zone-list a {
-  display: flex; justify-content: space-between; align-items: center; gap: 12px;
-  padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px;
-  background: var(--surface); color: inherit; text-decoration: none;
-}
-.zone-list a:hover { border-color: var(--accent); }
-.zone-form { display: grid; gap: 14px; }
-.zone-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
-
 /* 지도 화면 */
 .map-page { display: flex; flex-direction: column; height: 100dvh; }
 .map-bar { display: grid; gap: 8px; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--line); }
-.map-title { display: flex; align-items: center; gap: 10px; }
-.map-title a { font-size: 20px; text-decoration: none; }
+.map-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .map-title h1 { font-size: 17px; }
+.map-title select {
+  flex: 1; min-width: 0; padding: 7px 8px;
+  border: 1px solid var(--line); border-radius: 6px;
+  background: var(--surface); color: var(--text);
+  font: inherit; font-weight: 700;
+}
+.map-title button { flex: none; }
+.zone-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; }
+.zone-form .error { grid-column: 1 / -1; }
+@media (max-width: 560px) {
+  .zone-form { grid-template-columns: 1fr; }
+}
 .search { display: flex; gap: 8px; }
 .search input { flex: 1; min-width: 0; }
 .search button { flex: none; }

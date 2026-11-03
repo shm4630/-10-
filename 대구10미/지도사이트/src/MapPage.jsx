@@ -4,6 +4,13 @@ import { createIcon, createPopup, groupByLocation, iconSignature } from './mapMa
 import { getDeviceId, SETUP_MESSAGE, supabase } from './supabase.js';
 
 const PAGE_SIZE = 1000;
+// 구획이 하나도 없을 때 보여줄 위치(대구 중심)
+const DEFAULT_CENTER = [35.8714, 128.6014];
+const DEFAULT_ZOOM = 12;
+
+function mapUrl(slug) {
+  return `/map/${encodeURIComponent(slug)}`;
+}
 
 async function loadStores(zoneId) {
   const stores = [];
@@ -33,17 +40,25 @@ function matchesFilter(store, filter) {
 }
 
 export default function MapPage({ slug }) {
+  const [zones, setZones] = useState([]);
   const [zone, setZone] = useState(null);
   const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(Boolean(supabase));
   const [error, setError] = useState(supabase ? '' : SETUP_MESSAGE);
   const [notice, setNotice] = useState('');
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState(null);
   const [searching, setSearching] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
+  const [road, setRoad] = useState('');
+  const [area, setArea] = useState('');
+  const [creating, setCreating] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const mapElement = useRef(null);
   const mapRef = useRef(null);
   const markersRef = useRef(new Map());
+  const fitRef = useRef(null);
 
   function mergeStore(next) {
     setStores((current) => current.map((store) => (
@@ -67,24 +82,35 @@ export default function MapPage({ slug }) {
     let active = true;
 
     (async () => {
-      const { data, error: zoneError } = await supabase
-        .from('zones').select('*').eq('slug', slug).maybeSingle();
+      const { data, error: zonesError } = await supabase
+        .from('zones').select('*').order('created_at', { ascending: false });
+      if (zonesError) throw zonesError;
       if (!active) return;
-      if (zoneError) throw zoneError;
-      if (!data) {
-        setError('없는 구획입니다.');
+      setZones(data);
+
+      const target = slug ? data.find((item) => item.slug === slug) : data[0];
+      if (!target) {
+        if (slug) setError('없는 구획입니다.');
+        setFormOpen(true);
+        setLoading(false);
         return;
       }
-      setZone(data);
-      const rows = await loadStores(data.id);
-      if (active) setStores(rows);
+      setZone(target);
+      const rows = await loadStores(target.id);
+      if (active) {
+        setStores(rows);
+        setLoading(false);
+      }
     })().catch((loadError) => {
-      if (active) setError(`지도를 불러오지 못했습니다: ${loadError.message}`);
+      if (active) {
+        setError(`지도를 불러오지 못했습니다: ${loadError.message}`);
+        setLoading(false);
+      }
     });
 
     // 다른 사용자의 제보를 바로 반영한다.
     const channel = supabase
-      .channel(`stores-${slug}`)
+      .channel('stores-updates')
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'stores' }, (payload) => {
         mergeStore(payload.new);
       })
@@ -97,30 +123,22 @@ export default function MapPage({ slug }) {
   }, [slug]);
 
   useEffect(() => {
-    if (!zone || mapRef.current) return undefined;
-
-    const map = L.map(mapElement.current);
+    const container = mapElement.current;
+    const map = L.map(container).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> 기여자',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> 기여자 · 식당 정보: 소상공인시장진흥공단',
     }).addTo(map);
-    const boundary = L.geoJSON(zone.boundary, {
-      interactive: false,
-      style: { color: '#2563eb', weight: 2, fillOpacity: 0.04, dashArray: '6 4' },
-    }).addTo(map);
-    const fitToZone = () => map.fitBounds(boundary.getBounds(), { padding: [16, 16], animate: false });
-    fitToZone();
     mapRef.current = map;
 
     // 화면 크기가 늦게 정해져도 구획이 꽉 차게 보이도록, 사용자가 조작하기 전까지 다시 맞춘다.
     let userMoved = false;
     const markMoved = () => { userMoved = true; };
-    const container = mapElement.current;
     container.addEventListener('pointerdown', markMoved);
     container.addEventListener('wheel', markMoved, { passive: true });
     const observer = new ResizeObserver(() => {
       map.invalidateSize({ animate: false });
-      if (!userMoved) fitToZone();
+      if (!userMoved) fitRef.current?.();
     });
     observer.observe(container);
 
@@ -131,6 +149,21 @@ export default function MapPage({ slug }) {
       map.remove();
       mapRef.current = null;
       markersRef.current.clear();
+    };
+  }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!zone || !map) return undefined;
+    const boundary = L.geoJSON(zone.boundary, {
+      interactive: false,
+      style: { color: '#2563eb', weight: 2, fillOpacity: 0.04, dashArray: '6 4' },
+    }).addTo(map);
+    fitRef.current = () => map.fitBounds(boundary.getBounds(), { padding: [16, 16], animate: false });
+    fitRef.current();
+    return () => {
+      fitRef.current = null;
+      boundary.remove();
     };
   }, [zone]);
 
@@ -167,7 +200,26 @@ export default function MapPage({ slug }) {
         entry.signature = signature;
       }
     }
-  }, [visibleStores, zone]);
+  }, [visibleStores]);
+
+  async function handleCreate(event) {
+    event.preventDefault();
+    setCreating(true);
+    setFormError('');
+    try {
+      const response = await fetch('/api/zones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ road, area }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      window.location.href = mapUrl(result.slug);
+    } catch (createError) {
+      setFormError(createError.message || '구획을 만들지 못했습니다.');
+      setCreating(false);
+    }
+  }
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -201,41 +253,63 @@ export default function MapPage({ slug }) {
   const availableCount = stores.filter((store) => store.beeple_status === 'available').length;
   const unavailableCount = stores.filter((store) => store.beeple_status === 'unavailable').length;
 
-  if (error) {
-    return (
-      <main className="home">
-        <p className="error" role="alert">{error}</p>
-        <a href="/">처음으로</a>
-      </main>
-    );
-  }
-
   return (
     <main className="map-page">
       <header className="map-bar">
         <div className="map-title">
-          <a href="/" aria-label="구획 목록으로">←</a>
-          <h1>{zone ? `${zone.road} · ${zone.area}` : '불러오는 중…'}</h1>
+          {zones.length > 0 ? (
+            <select
+              aria-label="구획 선택"
+              value={zone?.slug ?? ''}
+              onChange={(e) => { window.location.href = mapUrl(e.target.value); }}
+            >
+              {zones.map((item) => (
+                <option key={item.slug} value={item.slug}>{item.road} · {item.area}</option>
+              ))}
+            </select>
+          ) : (
+            <h1>비플페이 지도</h1>
+          )}
+          <button type="button" className="ghost" aria-expanded={formOpen} onClick={() => setFormOpen(!formOpen)}>
+            새 구획
+          </button>
         </div>
-        <form className="search" onSubmit={handleSearch}>
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="근처 한식집 찾기"
-            aria-label="식당 검색"
-            maxLength={100}
-          />
-          <button type="submit" disabled={searching}>{searching ? '찾는 중' : '검색'}</button>
-          {filter && <button type="button" className="ghost" onClick={clearSearch}>전체 보기</button>}
-        </form>
-        <p className="legend">
-          <span><i className="dot dot-available" />가능 {availableCount}</span>
-          <span><i className="dot dot-unavailable" />불가능 {unavailableCount}</span>
-          <span><i className="dot" />전체 {filter ? `${visibleStores.length} / ` : ''}{stores.length}</span>
-        </p>
+
+        {formOpen && (
+          <form className="zone-form" onSubmit={handleCreate}>
+            <input value={road} onChange={(e) => setRoad(e.target.value)} placeholder="구획 이름 (을지로)" aria-label="구획 이름" maxLength={40} required />
+            <input value={area} onChange={(e) => setArea(e.target.value)} placeholder="동 이름 또는 지명 (을지로동)" aria-label="동 이름 또는 지명" maxLength={40} required />
+            <button type="submit" disabled={creating}>{creating ? '식당 정보를 모으는 중…' : '지도 만들기'}</button>
+            {formError && <p className="error" role="alert">{formError}</p>}
+          </form>
+        )}
+
+        {zone && (
+          <>
+            <form className="search" onSubmit={handleSearch}>
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="근처 한식집 찾기"
+                aria-label="식당 검색"
+                maxLength={100}
+              />
+              <button type="submit" disabled={searching}>{searching ? '찾는 중' : '검색'}</button>
+              {filter && <button type="button" className="ghost" onClick={clearSearch}>전체 보기</button>}
+            </form>
+            <p className="legend">
+              <span><i className="dot dot-available" />가능 {availableCount}</span>
+              <span><i className="dot dot-unavailable" />불가능 {unavailableCount}</span>
+              <span><i className="dot" />전체 {filter ? `${visibleStores.length} / ` : ''}{stores.length}</span>
+            </p>
+          </>
+        )}
+        {loading && <p className="notice">지도를 불러오는 중입니다…</p>}
+        {!loading && !error && !zone && <p className="notice">아직 구획이 없습니다. 위에 입력해 첫 지도를 만들어 보세요.</p>}
         {zone && !zone.boundary_exact && (
           <p className="notice">이 구획은 경계 정보가 없어 주변 사각형 범위로 표시합니다.</p>
         )}
+        {error && <p className="error" role="alert">{error}</p>}
         {notice && <p className="error" role="alert">{notice}</p>}
       </header>
       <div className="map" ref={mapElement} />

@@ -1,4 +1,3 @@
-import { createHash, timingSafeEqual } from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 import { findBoundary, fetchStoresInRing, MAX_STORES } from './collect.js';
 import { CATEGORIES, filterRestaurants, parseSearch } from './gemini.js';
@@ -7,7 +6,6 @@ import { CATEGORIES, filterRestaurants, parseSearch } from './gemini.js';
 // 각 함수는 응답으로 보낼 { status, body }를 돌려준다.
 
 const CLIENT_OPTIONS = { auth: { persistSession: false, autoRefreshToken: false } };
-const UPSERT_BATCH = 500;
 const MAX_INPUT_LENGTH = 40;
 const MAX_QUERY_LENGTH = 100;
 
@@ -37,21 +35,6 @@ function isSameOrigin(origin, host) {
   }
 }
 
-// 길이가 달라도 비교 시간이 같도록 해시를 비교한다.
-function isPasswordMatch(input, expected) {
-  const hash = (value) => createHash('sha256').update(value).digest();
-  return timingSafeEqual(hash(input), hash(expected));
-}
-
-// 브라우저가 한글 비밀번호도 헤더로 보낼 수 있게 인코딩하므로 여기서 되돌린다.
-function decodePassword(encoded) {
-  try {
-    return decodeURIComponent(encoded ?? '');
-  } catch {
-    return '';
-  }
-}
-
 function cleanText(value) {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ') : '';
 }
@@ -60,53 +43,28 @@ function toSlug(area, road) {
   return `${area}-${road}`.replace(/[\s/?#%\\]+/g, '-');
 }
 
-async function saveZone(client, { slug, road, area, boundary, stores }) {
-  for (let i = 0; i < stores.length; i += UPSERT_BATCH) {
-    // beeple_status는 보내지 않으므로 다시 수집해도 사용자 제보가 유지된다.
-    const rows = stores.slice(i, i + UPSERT_BATCH).map((store) => ({
-      ...store, updated_at: new Date().toISOString(),
-    }));
-    const { error } = await client.from('stores').upsert(rows, { onConflict: 'biz_id' });
-    if (error) throw error;
-  }
-
-  const { data: zone, error: zoneError } = await client
-    .from('zones')
-    .upsert({
-      slug,
-      road,
-      area,
-      display_name: boundary.displayName,
-      boundary: { type: 'Polygon', coordinates: [boundary.ring] },
-      boundary_exact: boundary.exact,
-      store_count: stores.length,
-    }, { onConflict: 'slug' })
-    .select('id')
-    .single();
-  if (zoneError) throw zoneError;
-
-  const { error: deleteError } = await client.from('zone_stores').delete().eq('zone_id', zone.id);
-  if (deleteError) throw deleteError;
-  for (let i = 0; i < stores.length; i += UPSERT_BATCH) {
-    const links = stores.slice(i, i + UPSERT_BATCH).map((store) => ({
-      zone_id: zone.id, biz_id: store.biz_id,
-    }));
-    const { error } = await client.from('zone_stores').insert(links);
-    if (error) throw error;
-  }
+// 저장은 서버만 아는 토큰을 확인하는 DB 함수로 한다. 사용자 제보는 함수 안에서 유지된다.
+async function saveZone(client, token, { slug, road, area, boundary, stores }) {
+  const { error } = await client.rpc('save_zone', {
+    p_token: token,
+    p_slug: slug,
+    p_road: road,
+    p_area: area,
+    p_display_name: boundary.displayName,
+    p_boundary: { type: 'Polygon', coordinates: [boundary.ring] },
+    p_boundary_exact: boundary.exact,
+    p_stores: stores,
+  });
+  if (error) throw error;
 }
 
-export async function createZone(env, { body, encodedPassword, origin, host }) {
+export async function createZone(env, { body, origin, host }) {
   if (!isSameOrigin(origin, host)) return fail(403, '허용되지 않은 요청입니다.');
-  if (!env.ADMIN_PASSWORD) return fail(403, '환경 변수 ADMIN_PASSWORD를 설정해야 구획을 만들 수 있습니다.');
-  if (!isPasswordMatch(decodePassword(encodedPassword), env.ADMIN_PASSWORD)) {
-    return fail(401, '비밀번호가 맞지 않습니다.');
-  }
 
   const url = env.VITE_SUPABASE_URL;
-  const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !serviceKey || !env.DATA_GO_KR_KEY) {
-    return fail(500, '환경 변수 VITE_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, DATA_GO_KR_KEY를 입력해 주세요.');
+  const publishableKey = env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !publishableKey || !env.ZONE_WRITE_TOKEN || !env.DATA_GO_KR_KEY) {
+    return fail(500, '환경 변수 VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY, ZONE_WRITE_TOKEN, DATA_GO_KR_KEY를 입력해 주세요.');
   }
 
   const road = cleanText(body?.road);
@@ -117,6 +75,17 @@ export async function createZone(env, { body, encodedPassword, origin, host }) {
   }
 
   try {
+    const client = createClient(url, publishableKey, CLIENT_OPTIONS);
+    const slug = toSlug(area, road);
+
+    // 누구나 요청할 수 있으므로 이미 있는 구획은 다시 수집하지 않는다.
+    const { data: existing, error: existingError } = await client
+      .from('zones').select('slug, store_count').eq('slug', slug).maybeSingle();
+    if (existingError) throw existingError;
+    if (existing) {
+      return { status: 200, body: { slug, storeCount: existing.store_count, existed: true } };
+    }
+
     const boundary = await findBoundary(road, area);
     if (!boundary) return fail(404, `"${road}, ${area}"의 위치를 찾지 못했습니다. 동 이름을 확인해 주세요.`);
 
@@ -126,9 +95,7 @@ export async function createZone(env, { body, encodedPassword, origin, host }) {
     }
 
     const filtered = await filterRestaurants(env, found.stores);
-    const slug = toSlug(area, road);
-    const client = createClient(url, serviceKey, CLIENT_OPTIONS);
-    await saveZone(client, { slug, road, area, boundary, stores: filtered.stores });
+    await saveZone(client, env.ZONE_WRITE_TOKEN, { slug, road, area, boundary, stores: filtered.stores });
 
     return {
       status: 200,

@@ -9,16 +9,14 @@
 - 저장과 실시간 반영: Supabase
 - 식당 필터링과 자연어 검색: Gemini (키가 없으면 업종 코드와 단어 일치로 동작)
 
-## 남은 설정
+사이트에 들어가면 가장 최근 구획의 지도가 바로 뜬다. 로그인과 비밀번호는 없으며, 누구나 새 구획을 만들 수 있다.
+
+## 설정
 
 1. Supabase SQL Editor에서 `supabase/schema.sql`을 실행한다.
-2. Vercel 프로젝트의 Production 환경변수에 아래 값을 넣는다.
-   - `VITE_SUPABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY` (비밀 키)
-   - `GEMINI_API_KEY` (비밀 키)
-3. 다시 배포한다. `VITE_` 값은 빌드할 때 들어가므로 재배포가 필요하다.
-
-관리자 비밀번호는 이 폴더의 `.env.local`에 있는 `ADMIN_PASSWORD`이다.
+2. `ZONE_WRITE_TOKEN`으로 쓸 임의의 문자열을 정하고, 그 해시를 `private.settings`에 넣는다(`schema.sql`의 안내 참고).
+3. Vercel 프로젝트의 Production 환경변수에 `.env.example`의 값을 넣는다. `GEMINI_API_KEY`는 선택이다.
+4. 다시 배포한다. 환경변수는 배포할 때 적용된다.
 
 ## 로컬 실행
 
